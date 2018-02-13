@@ -35,6 +35,7 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
      * @param _addressArgs [0] -  meta.owner
      * @param _addressArgs [1] -  paymentData.feeRecipient
      * @param _addressArgs [2] -  txnData.toAddress
+     * @param _addressArgs [3] -  meta.externalOwner
      * @param _uintArgs [0]    -  paymentData.fee
      * @param _uintArgs [1]    -  paymentData.bounty
      * @param _uintArgs [2]    -  schedule.claimWindowSize
@@ -50,7 +51,7 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
      * @param _callData        -  The call data
      */
     function createRequest(
-        address[3]  _addressArgs,
+        address[4]  _addressArgs,
         uint[12]    _uintArgs,
         bytes       _callData
     )
@@ -65,7 +66,8 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
                 msg.sender,       // Created by
                 _addressArgs[0],  // meta.owner
                 _addressArgs[1],  // paymentData.feeRecipient
-                _addressArgs[2]   // txnData.toAddress
+                _addressArgs[2],  // txnData.toAddress
+                _addressArgs[3]   // meta.externalOwner
             ],
             _uintArgs,            //uint[12]
             _callData
@@ -90,7 +92,7 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
      *  Parameters are the same as `createRequest`
      */
     function createValidatedRequest(
-        address[3]  _addressArgs,
+        address[4]  _addressArgs,
         uint[12]    _uintArgs,
         bytes       _callData
     )
@@ -156,7 +158,7 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
      * @dev Validate the constructor arguments for either `createRequest` or `createValidatedRequest`.
      */
     function validateRequestParams(
-        address[3]  _addressArgs,
+        address[4]  _addressArgs,
         uint[12]    _uintArgs,
         bytes       _callData,
         uint        _endowment
@@ -168,7 +170,8 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
                 msg.sender,      // meta.createdBy
                 _addressArgs[0],  // meta.owner
                 _addressArgs[1],  // paymentData.feeRecipient
-                _addressArgs[2]   // txnData.toAddress
+                _addressArgs[2],   // txnData.toAddress
+                _addressArgs[3]  // meta.externalOwner
             ],
             _uintArgs,
             _callData,

@@ -16,6 +16,8 @@ library RequestMetaLib {
         bool wasCalled;             /// Was the TransactionRequest called?
 
         bool wasSuccessful;         /// Was the return value from the TransactionRequest execution successful?
+
+        address externalOwner;
     }
 
 }

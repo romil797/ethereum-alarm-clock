@@ -136,7 +136,8 @@ library SchedulerLib {
     function schedule(
         FutureTransaction storage self,
         address _factoryAddress,
-        address _feeRecipient
+        address _feeRecipient,
+        address _externalOwner
     ) 
         internal returns (address newRequestAddress) 
     {
@@ -156,7 +157,8 @@ library SchedulerLib {
             [
                 msg.sender,                 // meta.owner
                 _feeRecipient,              // paymentData.feeRecipient
-                self.toAddress              // txnData.toAddress
+                self.toAddress,             // txnData.toAddress
+                _externalOwner              // meta.externalOwner
             ],
             [
                 self.fee,                   // paymentData.fee

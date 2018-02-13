@@ -24,7 +24,7 @@ library RequestLib {
      *  put them in arrays. - Piper
      */
     struct SerializedRequest {
-        address[6]  addressValues;
+        address[7]  addressValues;
         bool[3]     boolValues;
         uint[15]    uintValues;
         uint8[1]    uint8Values;
@@ -58,7 +58,7 @@ library RequestLib {
      * @dev Validate the initialization parameters of a transaction request.
      */
     function validate(
-        address[4]  _addressArgs,
+        address[5]  _addressArgs,
         uint[12]    _uintArgs,
         bytes       _callData,
         uint        _endowment
@@ -77,6 +77,7 @@ library RequestLib {
         request.paymentData.feeRecipient =          _addressArgs[2];
         request.paymentData.bountyBenefactor =      0x0;
         request.txnData.toAddress =                 _addressArgs[3];
+        request.meta.externalOwner =                _addressArgs[4];
 
         // Boolean values
         request.meta.isCancelled =      false;
@@ -139,19 +140,20 @@ library RequestLib {
      */
     function initialize(
         Request storage self,
-        address[4]      _addressArgs,
+        address[5]      _addressArgs,
         uint[12]        _uintArgs,
         bytes           _callData
     ) 
         public returns (bool initialized)
     {
-        address[6] memory addressValues = [
+        address[7] memory addressValues = [
             0x0,                // self.claimData.claimedBy
             _addressArgs[0],    // self.meta.createdBy
             _addressArgs[1],    // self.meta.owner
             _addressArgs[2],    // self.paymentData.feeRecipient
             0x0,                // self.paymentData.bountyBenefactor
-            _addressArgs[3]     // self.txnData.toAddress
+            _addressArgs[3],     // self.txnData.toAddress
+            _addressArgs[4]     // self.meta.externalOwner
         ];
 
         bool[3] memory boolValues = [false, false, false];
@@ -205,6 +207,7 @@ library RequestLib {
         self.serializedValues.addressValues[3] = self.paymentData.feeRecipient;
         self.serializedValues.addressValues[4] = self.paymentData.bountyBenefactor;
         self.serializedValues.addressValues[5] = self.txnData.toAddress;
+        self.serializedValues.addressValues[6] = self.meta.externalOwner;
 
         // Boolean values
         self.serializedValues.boolValues[0] = self.meta.isCancelled;
@@ -241,7 +244,7 @@ library RequestLib {
      */
     function deserialize(
         Request storage self,
-        address[6]  _addressValues,
+        address[7]  _addressValues,
         bool[3]     _boolValues,
         uint[15]    _uintValues,
         uint8[1]    _uint8Values,
@@ -259,6 +262,7 @@ library RequestLib {
         self.paymentData.feeRecipient =         _addressValues[3];
         self.paymentData.bountyBenefactor =     _addressValues[4];
         self.txnData.toAddress =                _addressValues[5];
+        self.meta.externalOwner =               _addressValues[6];
 
         // Boolean values
         self.meta.isCancelled =     _boolValues[0];
@@ -514,7 +518,7 @@ library RequestLib {
         } else if (!self.meta.wasCalled && self.schedule.isAfterWindow()) {
             // not called but after the window
             return true;
-        } else if (!self.claimData.isClaimed() && self.schedule.isBeforeFreeze() && msg.sender == self.meta.owner) {
+        } else if (!self.claimData.isClaimed() && self.schedule.isBeforeFreeze() && (msg.sender == self.meta.owner || msg.sender == self.meta.externalOwner)) {
             // not claimed and before freezePeriod and owner is cancelling
             return true;
         } else {
@@ -561,7 +565,7 @@ library RequestLib {
         // This is to incentivize the cancelling of expired transaction requests.
         // This also guarantees that it is being cancelled after the call window
         // since the `isCancellable()` function checks this.
-        if (msg.sender != self.meta.owner) {
+        if (msg.sender != self.meta.owner && msg.sender != self.meta.externalOwner) {
             // Create the rewardBenefactor
             address rewardBenefactor = msg.sender;
             // Create the rewardOwed variable, it is one-hundredth

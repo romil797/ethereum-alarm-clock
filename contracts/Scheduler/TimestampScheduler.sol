@@ -13,7 +13,7 @@ contract TimestampScheduler is BaseScheduler {
      * @dev Constructor
      * @param _factoryAddress Address of the RequestFactory which creates requests for this scheduler.
      */
-    function TimestampScheduler(address _factoryAddress, address _feeRecipient) public {
+    function TimestampScheduler(address _factoryAddress, address _feeRecipient, address _owner) public {
         require(_factoryAddress != 0x0);
 
         // Default temporal unit is timestamp.
@@ -24,5 +24,8 @@ contract TimestampScheduler is BaseScheduler {
 
         // Sets the fee recipient for these schedulers.
         feeRecipient = _feeRecipient;
+
+        // Sets the owner allowed to pause/unpause the scheduler contract
+        owner = _owner;
     }
 }

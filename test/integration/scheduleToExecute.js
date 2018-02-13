@@ -22,6 +22,7 @@ const { waitUntilBlock } = require("@digix/tempo")(web3)
 contract("Schedule to execution flow", (accounts) => {
   const gasPrice = config.web3.utils.toWei("33", "gwei")
   const testData = ethUtil.bufferToHex(Buffer.from("I am the test data".padEnd(32, "X123")))
+  const multisigWithPausingPower = accounts[3]
 
   let blockScheduler
   let requestFactory
@@ -49,7 +50,8 @@ contract("Schedule to execution flow", (accounts) => {
 
     blockScheduler = await BlockScheduler.new(
       requestFactory.address,
-      "0xecc9c5fff8937578141592e7E62C2D2E364311b8"
+      "0xecc9c5fff8937578141592e7E62C2D2E364311b8",
+      multisigWithPausingPower
     )
     expect(blockScheduler.address).to.exist
 

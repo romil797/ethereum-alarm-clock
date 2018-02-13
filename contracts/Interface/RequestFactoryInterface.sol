@@ -4,17 +4,17 @@ contract RequestFactoryInterface {
 
     event RequestCreated(address request, address indexed owner);
 
-    function createRequest(address[3] addressArgs,
+    function createRequest(address[4] addressArgs,
                            uint[12] uintArgs,
                            bytes callData)
         public payable returns (address);
 
-    function createValidatedRequest(address[3] addressArgs,
+    function createValidatedRequest(address[4] addressArgs,
                                     uint[12] uintArgs,
                                     bytes callData) 
         public payable returns (address);
 
-    function validateRequestParams(address[3] addressArgs,
+    function validateRequestParams(address[4] addressArgs,
                                    uint[12] uintArgs,
                                    bytes callData,
                                    uint endowment) 
