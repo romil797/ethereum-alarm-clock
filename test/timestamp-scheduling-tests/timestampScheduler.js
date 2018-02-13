@@ -19,6 +19,7 @@ const ethUtil = require("ethereumjs-util")
 
 contract("Timestamp scheduling", (accounts) => {
   const MINUTE = 60 // seconds
+  const requestFactoryOwner = accounts[3]
 
   const gasPrice = 20000
   const requiredDeposit = config.web3.utils.toWei("34", "kwei")
@@ -41,7 +42,8 @@ contract("Timestamp scheduling", (accounts) => {
     // Request factory
     requestFactory = await RequestFactory.new(
         requestTracker.address,
-        transactionRequestCore.address
+        transactionRequestCore.address,
+        requestFactoryOwner
     )
     expect(requestFactory.address).to.exist
 
@@ -142,5 +144,32 @@ contract("Timestamp scheduling", (accounts) => {
         { from: accounts[0] }
       )
       .should.be.rejectedWith("VM Exception while processing transaction: revert")
+  })
+
+  it("should revert when scheduler in paused state", async () => {
+    await requestFactory.pause({from: requestFactoryOwner})
+
+    const curBlock = await config.web3.eth.getBlock("latest")
+    const { timestamp } = curBlock
+    const windowStart = timestamp + (10 * MINUTE)
+    const fee = 98765
+    const bounty = 80008
+
+    await timestampScheduler.schedule(
+      transactionRecorder.address,
+      testData32, // callData
+      [
+        1212121, // callGas
+        123454321, // callValue
+        55 * MINUTE, // windowSize
+        windowStart,
+        gasPrice,
+        fee,
+        bounty,
+        requiredDeposit,
+      ],
+      { from: accounts[0], value: config.web3.utils.toWei("10") }
+    )
+    .should.be.rejectedWith("VM Exception while processing transaction: revert")
   })
 })

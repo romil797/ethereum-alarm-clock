@@ -17,6 +17,7 @@ const { waitUntilBlock } = require("@digix/tempo")(web3)
 
 contract("Cancelling", async (accounts) => {
   const Owner = accounts[0]
+  const requestFactoryOwner = accounts[4]
 
   const gasPrice = config.web3.utils.toWei("66", "gwei")
   const requiredDeposit = config.web3.utils.toWei("66", "kwei")
@@ -41,6 +42,7 @@ contract("Cancelling", async (accounts) => {
         Owner, // owner
         accounts[1], // fee recipient
         accounts[3], // toAddress
+        requestFactoryOwner
       ],
       [
         0, // fee
@@ -76,6 +78,8 @@ contract("Cancelling", async (accounts) => {
 
     expect(requestData.meta.owner).to.equal(Owner)
 
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
+
     expect(requestData.meta.isCancelled).to.be.false
 
     await waitUntilBlock(0, cancelAt)
@@ -102,12 +106,14 @@ contract("Cancelling", async (accounts) => {
 
     expect(requestData.meta.owner).to.equal(Owner)
 
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
+
     expect(requestData.meta.isCancelled).to.be.false
 
     await waitUntilBlock(0, cancelAt)
 
     await txRequest
-      .cancel({ from: accounts[4] })
+      .cancel({ from: accounts[9] })
       .should.be.rejectedWith("VM Exception while processing transaction: revert")
 
     await requestData.refresh()
@@ -135,6 +141,8 @@ contract("Cancelling", async (accounts) => {
     expect(cancelAt).to.be.above(await config.web3.eth.getBlockNumber())
 
     expect(requestData.meta.owner).to.equal(Owner)
+
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
 
     await waitUntilBlock(0, cancelAt)
 
@@ -189,6 +197,8 @@ contract("Cancelling", async (accounts) => {
 
     expect(requestData.meta.owner).to.equal(Owner)
 
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
+
     expect(requestData.meta.isCancelled).to.be.false
 
     await waitUntilBlock(0, cancelAt)
@@ -211,6 +221,8 @@ contract("Cancelling", async (accounts) => {
     expect(cancelAt).to.be.above(await config.web3.eth.getBlockNumber())
 
     expect(requestData.meta.owner).to.equal(Owner)
+
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
 
     expect(requestData.meta.isCancelled).to.be.false
 
@@ -235,6 +247,8 @@ contract("Cancelling", async (accounts) => {
     expect(executeAt).to.be.above(await config.web3.eth.getBlockNumber())
 
     expect(requestData.meta.owner).to.equal(Owner)
+
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
 
     expect(requestData.meta.isCancelled).to.be.false
 
@@ -288,6 +302,8 @@ contract("Cancelling", async (accounts) => {
 
     expect(requestData.meta.owner).to.equal(Owner)
 
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
+
     await waitUntilBlock(0, cancelFirst)
 
     const cancelTx = await txRequest.cancel({
@@ -319,6 +335,8 @@ contract("Cancelling", async (accounts) => {
     expect(cancelAt).to.be.above(await config.web3.eth.getBlockNumber())
 
     expect(requestData.meta.owner).to.equal(Owner)
+
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
 
     expect(requestData.meta.isCancelled).to.be.false
 
@@ -363,6 +381,30 @@ contract("Cancelling", async (accounts) => {
     // console.log(balanceAfterCancel)
     // console.log(contractBalanceBefore)
     // console.log(contractBalanceAfter)
+  })
+
+  it("tests CAN cancel before the claim window when using externalOwner", async () => {
+    const requestData = await RequestData.from(txRequest)
+
+    const cancelAt =
+      requestData.schedule.windowStart - requestData.schedule.freezePeriod - 3
+
+    expect(cancelAt).to.be.above(await config.web3.eth.getBlockNumber())
+
+    expect(requestData.meta.owner).to.equal(Owner)
+
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
+
+    expect(requestData.meta.isCancelled).to.be.false
+
+    await waitUntilBlock(0, cancelAt)
+
+    const cancelTx = await txRequest.cancel({ from: requestFactoryOwner })
+    expect(cancelTx.receipt).to.exist
+
+    const requestDataRefresh = await parseRequestData(txRequest)
+
+    expect(requestDataRefresh.meta.isCancelled).to.be.true
   })
 
   // /// TODO

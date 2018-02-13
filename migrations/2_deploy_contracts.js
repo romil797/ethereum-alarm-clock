@@ -25,6 +25,8 @@ const BaseScheduler               = artifacts.require("./BaseScheduler.sol"),
 
 const TransactionRecorder = artifacts.require("./TransactionRecorder.sol");
 
+const multisigWithPausingPower = "";
+
 module.exports = function(deployer) {
 
     console.log(`${"-".repeat(30)}
@@ -99,7 +101,7 @@ NOW DEPLOYING THE ETHEREUM ALARM CLOCK CONTRACTS...\n`)
         deployer.link(RequestTracker, RequestFactory)
         // deployer.link(TransactionRequest, RequestFactory)
         deployer.link(SafeMath, RequestFactory)
-        return deployer.deploy(RequestFactory, RequestTracker.address, TransactionRequestCore.address)
+        return deployer.deploy(RequestFactory, RequestTracker.address, TransactionRequestCore.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8')
     })
     .then(() => {
         deployer.link(RequestScheduleLib, BaseScheduler)

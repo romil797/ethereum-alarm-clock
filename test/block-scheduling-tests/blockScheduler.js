@@ -21,6 +21,7 @@ const ethUtil = require("ethereumjs-util")
 contract("Block scheduling", (accounts) => {
   const Owner = accounts[0]
   const User2 = accounts[2]
+  const requestFactoryOwner = accounts[3]
   const gasPrice = 20000
 
   const fee = 0
@@ -49,7 +50,8 @@ contract("Block scheduling", (accounts) => {
 
     requestFactory = await RequestFactory.new(
         requestTracker.address,
-        transactionRequestCore.address
+        transactionRequestCore.address,
+        requestFactoryOwner
     )
     blockScheduler = await BlockScheduler.new(
       requestFactory.address,
@@ -175,5 +177,45 @@ contract("Block scheduling", (accounts) => {
         { from: User2, value: config.web3.utils.toWei("10") }
       )
       .should.be.rejectedWith("VM Exception while processing transaction: revert")
+  })
+
+  it("should revert when scheduler in paused state", async () => {
+    await requestFactory.pause({from: requestFactoryOwner})
+
+    const curBlockNum = await config.web3.eth.getBlockNumber()
+    const windowStart = curBlockNum + 20
+    const testData32 = ethUtil.bufferToHex(Buffer.from("A1B2".padEnd(32, "FF")))
+
+    // Endowment is the minimum amount of ether that must be sent for the transaction
+    // to be scheduled. It covers all possible payments.
+    const endowment = await paymentLib.computeEndowment(
+      0,
+      0,
+      1212121, // callGas
+      123454321, // callValue
+      gasPrice,
+      180000 // gas overhead
+    )
+
+    // Now let's send it an actual transaction
+    await blockScheduler.schedule(
+      transactionRecorder.address,
+      testData32, // callData
+      [
+        1212121, // callGas
+        123454321, // callValue
+        54321, // windowSize
+        windowStart,
+        gasPrice,
+        fee,
+        bounty,
+        requiredDeposit,
+      ],
+      {
+        from: accounts[0],
+        value: endowment,
+      }
+    )
+    .should.be.rejectedWith("VM Exception while processing transaction: revert")
   })
 })

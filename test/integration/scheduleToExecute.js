@@ -22,6 +22,7 @@ const { waitUntilBlock } = require("@digix/tempo")(web3)
 contract("Schedule to execution flow", (accounts) => {
   const gasPrice = config.web3.utils.toWei("33", "gwei")
   const testData = ethUtil.bufferToHex(Buffer.from("I am the test data".padEnd(32, "X123")))
+  const requestFactoryOwner = accounts[3]
 
   let blockScheduler
   let requestFactory
@@ -43,7 +44,8 @@ contract("Schedule to execution flow", (accounts) => {
 
     requestFactory = await RequestFactory.new(
         requestTracker.address,
-        transactionRequestCore.address
+        transactionRequestCore.address,
+        requestFactoryOwner
     )
     expect(requestFactory.address).to.exist
 

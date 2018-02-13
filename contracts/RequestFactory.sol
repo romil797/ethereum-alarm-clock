@@ -6,12 +6,13 @@ import "contracts/TransactionRequestCore.sol";
 import "contracts/Library/RequestLib.sol";
 import "contracts/IterTools.sol";
 import "contracts/CloneFactory.sol";
+import "contracts/zeppelin/Pausable.sol";
 
 /**
  * @title RequestFactory
  * @dev Contract which will produce new TransactionRequests.
  */
-contract RequestFactory is RequestFactoryInterface, CloneFactory {
+contract RequestFactory is RequestFactoryInterface, CloneFactory, Pausable {
     using IterTools for bool[6];
 
     // RequestTracker of this contract.
@@ -20,11 +21,14 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
 
     function RequestFactory(
         address _trackerAddress,
-        address _transactionRequestCore
+        address _transactionRequestCore,
+        address _owner
     ) public {
         require( _trackerAddress != 0x0 );
         require( _transactionRequestCore != 0x0 );
+        require( _owner != address(0));
 
+        owner = _owner;
         requestTracker = RequestTrackerInterface(_trackerAddress);
         transactionRequestCore = TransactionRequestCore(_transactionRequestCore);
     }
@@ -54,6 +58,7 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
         uint[12]    _uintArgs,
         bytes       _callData
     )
+        whenNotPaused
         public payable returns (address)
     {
         // Create a new transaction request clone from transactionRequestCore.
@@ -65,7 +70,8 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
                 msg.sender,       // Created by
                 _addressArgs[0],  // meta.owner
                 _addressArgs[1],  // paymentData.feeRecipient
-                _addressArgs[2]   // txnData.toAddress
+                _addressArgs[2],  // txnData.toAddress
+                owner             // requestFactory.owner
             ],
             _uintArgs,            //uint[12]
             _callData
@@ -94,6 +100,7 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
         uint[12]    _uintArgs,
         bytes       _callData
     )
+        whenNotPaused
         public payable returns (address)
     {
         bool[6] memory isValid = validateRequestParams(
@@ -168,7 +175,8 @@ contract RequestFactory is RequestFactoryInterface, CloneFactory {
                 msg.sender,      // meta.createdBy
                 _addressArgs[0],  // meta.owner
                 _addressArgs[1],  // paymentData.feeRecipient
-                _addressArgs[2]   // txnData.toAddress
+                _addressArgs[2],  // txnData.toAddress
+                owner             // requestFactory.owner
             ],
             _uintArgs,
             _callData,

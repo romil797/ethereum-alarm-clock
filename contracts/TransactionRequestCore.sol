@@ -15,6 +15,7 @@ contract TransactionRequestCore is TransactionRequestInterface {
      *  addressArgs[1] - meta.owner
      *  addressArgs[2] - paymentData.feeRecipient
      *  addressArgs[3] - txnData.toAddress
+     *  addressArgs[4] - meta.externalOwner
      *
      *  uintArgs[0]  - paymentData.fee
      *  uintArgs[1]  - paymentData.bounty
@@ -30,7 +31,7 @@ contract TransactionRequestCore is TransactionRequestInterface {
      *  uintArgs[11] - claimData.requiredDeposit
      */
     function initialize(
-        address[4]  addressArgs,
+        address[5]  addressArgs,
         uint[12]    uintArgs,
         bytes       callData
     )
@@ -66,8 +67,8 @@ contract TransactionRequestCore is TransactionRequestInterface {
 
     // Declaring this function `view`, although it creates a compiler warning, is
     // necessary to return values from it.
-    function requestData()
-        public view returns (address[6], bool[3], uint[15], uint8[1])
+    function requestData() 
+        public view returns (address[7], bool[3], uint[15], uint8[1])
     {
         if (txnRequest.serialize()) {
             return (

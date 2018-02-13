@@ -41,6 +41,7 @@ contract("Request factory", async (accounts) => {
     const callGas = 1000000
     const requiredDeposit = config.web3.utils.toWei("45", "kwei")
     const testCallData = "this-is-call-data"
+    const requestFactoryOwner = accounts[3]
 
     // Validate the data with the RequestLib
     const isValid = await requestLib.validate(
@@ -76,7 +77,8 @@ contract("Request factory", async (accounts) => {
     // Pass the request tracker to the factory
     const requestFactory = await RequestFactory.new(
         requestTracker.address,
-        transactionRequestCore.address
+        transactionRequestCore.address,
+        requestFactoryOwner
     )
     expect(requestFactory.address).to.exist
 
@@ -112,6 +114,8 @@ contract("Request factory", async (accounts) => {
     const requestData = await parseRequestData(txRequest)
 
     expect(requestData.meta.owner).to.equal(accounts[0])
+
+    expect(requestData.meta.externalOwner).to.equal(requestFactoryOwner)
 
     expect(requestData.meta.createdBy).to.equal(accounts[0])
 
