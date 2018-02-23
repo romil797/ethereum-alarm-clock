@@ -1,0 +1,372 @@
+{
+  "contractName": "GroveLibDispatch",
+  "abi": [
+    {
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "fallback"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6101458061001e6000396000f3006060604052341561000f57600080fd5b60008073e4b9d46d326e1107d4c26dfd34508233d82dfe6e91508173ffffffffffffffffffffffffffffffffffffffff1663693ec85e6000604051602001526040518163ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018080602001828103825260088152602001807f47726f76654c6962000000000000000000000000000000000000000000000000815250602001915050602060405180830381600087803b15156100d157600080fd5b6102c65a03f115156100e257600080fd5b5050506040518051905090503660008037600080366000846127105a03f43d806000803e816000811461011457816000f35b816000fd00a165627a7a72305820a3ed3d46a1cea982e842122c9347a33d7daf4ad7a8738818a365c962d2f0f8160029",
+  "deployedBytecode": "0x6060604052341561000f57600080fd5b60008073111122223333444455556666777788889999000091508173ffffffffffffffffffffffffffffffffffffffff1663693ec85e6000604051602001526040518163ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018080602001828103825260088152602001807f47726f76654c6962000000000000000000000000000000000000000000000000815250602001915050602060405180830381600087803b15156100d157600080fd5b6102c65a03f115156100e257600080fd5b5050506040518051905090503660008037600080366000846127105a03f43d806000803e816000811461011457816000f35b816000fd00a165627a7a72305820a3ed3d46a1cea982e842122c9347a33d7daf4ad7a8738818a365c962d2f0f8160029",
+  "sourceMap": "72:503:5:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "72:503:5:-;;;;;;;;;;;131:23;221:14;169:42;131:81;;238:11;:15;;;:27;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;221:44;;312:12;307:3;302;289:12;404:1;401;387:12;382:3;374:6;366:5;361:3;357;344:12;423:14;462:5;459:1;456;441:14;479:7;495:1;490:34;;;;552:5;549:1;542:6;490:34;513:5;510:1;503:6",
+  "source": "pragma solidity ^0.4.18;\n\nimport \"contracts/Dispatch/DispatchHub.sol\";\n\ncontract GroveLibDispatch {\n    function() public {\n      \tDispatchHub dispatchHub = DispatchHub(0x1111222233334444555566667777888899990000);\n      \taddress target = dispatchHub.get(\"GroveLib\");\n\n      \tassembly {\n\t\t\tcalldatacopy(0x0, 0x0, calldatasize)\n\t\t\tlet success := delegatecall(sub(gas, 10000), target, 0x0, calldatasize, 0, 0)\n\t\t\tlet retSz := returndatasize\n\t\t\treturndatacopy(0, 0, retSz)\n\t\t\tswitch success\n\t\t\tcase 0 {\n\t\t\t\trevert(0, retSz)\n\t\t\t}\n\t\t\tdefault {\n\t\t\t\treturn(0, retSz)\n\t\t\t}\n\t\t}\n    }\n}\n",
+  "sourcePath": "/home/logan/Work/ethereum-alarm-clock/contracts/Dispatch/Generated/GroveLibDispatch.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/logan/Work/ethereum-alarm-clock/contracts/Dispatch/Generated/GroveLibDispatch.sol",
+      "exportedSymbols": {
+        "GroveLibDispatch": [
+          230
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 210,
+        "name": "PragmaDirective",
+        "src": "0:24:5"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 7149,
+          "absolutePath": "contracts/Dispatch/DispatchHub.sol",
+          "file": "contracts/Dispatch/DispatchHub.sol",
+          "scope": 231,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 211,
+        "name": "ImportDirective",
+        "src": "26:44:5"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            230
+          ],
+          "name": "GroveLibDispatch",
+          "scope": 231
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "payable": false,
+              "scope": 230,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 212,
+                "name": "ParameterList",
+                "src": "112:2:5"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 213,
+                "name": "ParameterList",
+                "src": "122:0:5"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        215
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "dispatchHub",
+                          "scope": 229,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "contract DispatchHub",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "contractScope": null,
+                              "name": "DispatchHub",
+                              "referencedDeclaration": 7148,
+                              "type": "contract DispatchHub"
+                            },
+                            "id": 214,
+                            "name": "UserDefinedTypeName",
+                            "src": "131:11:5"
+                          }
+                        ],
+                        "id": 215,
+                        "name": "VariableDeclaration",
+                        "src": "131:23:5"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "contract DispatchHub",
+                          "type_conversion": true
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7148,
+                              "type": "type(contract DispatchHub)",
+                              "value": "DispatchHub"
+                            },
+                            "id": 216,
+                            "name": "Identifier",
+                            "src": "157:11:5"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "307831313131323232323333333334343434353535353636363637373737383838383939393930303030",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "address",
+                              "value": "0x1111222233334444555566667777888899990000"
+                            },
+                            "id": 217,
+                            "name": "Literal",
+                            "src": "169:42:5"
+                          }
+                        ],
+                        "id": 218,
+                        "name": "FunctionCall",
+                        "src": "157:55:5"
+                      }
+                    ],
+                    "id": 219,
+                    "name": "VariableDeclarationStatement",
+                    "src": "131:81:5"
+                  },
+                  {
+                    "attributes": {
+                      "assignments": [
+                        221
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "target",
+                          "scope": 229,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "address",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "address",
+                              "type": "address"
+                            },
+                            "id": 220,
+                            "name": "ElementaryTypeName",
+                            "src": "221:7:5"
+                          }
+                        ],
+                        "id": 221,
+                        "name": "VariableDeclaration",
+                        "src": "221:14:5"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "address",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_stringliteral_c3db570d588533c064b367eacf98f2bfdb31b53063ae0d6637ab35cd77980815",
+                                  "typeString": "literal_string \"GroveLib\""
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "get",
+                              "referencedDeclaration": 7147,
+                              "type": "function (string memory) view external returns (address)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 215,
+                                  "type": "contract DispatchHub",
+                                  "value": "dispatchHub"
+                                },
+                                "id": 222,
+                                "name": "Identifier",
+                                "src": "238:11:5"
+                              }
+                            ],
+                            "id": 223,
+                            "name": "MemberAccess",
+                            "src": "238:15:5"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "47726f76654c6962",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "string",
+                              "type": "literal_string \"GroveLib\"",
+                              "value": "GroveLib"
+                            },
+                            "id": 224,
+                            "name": "Literal",
+                            "src": "254:10:5"
+                          }
+                        ],
+                        "id": 225,
+                        "name": "FunctionCall",
+                        "src": "238:27:5"
+                      }
+                    ],
+                    "id": 226,
+                    "name": "VariableDeclarationStatement",
+                    "src": "221:44:5"
+                  },
+                  {
+                    "attributes": {
+                      "externalReferences": [
+                        {
+                          "target": {
+                            "declaration": 221,
+                            "isOffset": false,
+                            "isSlot": false,
+                            "src": "374:6:5",
+                            "valueSize": 1
+                          }
+                        }
+                      ],
+                      "operations": "{\n    calldatacopy(0x0, 0x0, calldatasize)\n    let success := delegatecall(sub(gas, 10000), target, 0x0, calldatasize, 0, 0)\n    let retSz := returndatasize\n    returndatacopy(0, 0, retSz)\n    switch success\n    case 0 {\n        revert(0, retSz)\n    }\n    default {\n        return(0, retSz)\n    }\n}"
+                    },
+                    "children": [],
+                    "id": 227,
+                    "name": "InlineAssembly",
+                    "src": "275:298:5"
+                  }
+                ],
+                "id": 228,
+                "name": "Block",
+                "src": "122:451:5"
+              }
+            ],
+            "id": 229,
+            "name": "FunctionDefinition",
+            "src": "104:469:5"
+          }
+        ],
+        "id": 230,
+        "name": "ContractDefinition",
+        "src": "72:503:5"
+      }
+    ],
+    "id": 231,
+    "name": "SourceUnit",
+    "src": "0:576:5"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {
+    "1519350737646": {
+      "events": {},
+      "links": {},
+      "address": "0x981823bf6858a1818438b63fa4f2f0d6d5acb677"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-23T01:52:26.683Z"
+}

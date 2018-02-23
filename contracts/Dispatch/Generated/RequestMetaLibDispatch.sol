@@ -2,10 +2,10 @@ pragma solidity ^0.4.18;
 
 import "contracts/Dispatch/DispatchHub.sol";
 
-contract MathLibDispatch {
+contract RequestMetaLibDispatch {
     function() public {
       	DispatchHub dispatchHub = DispatchHub(0x1111222233334444555566667777888899990000);
-      	address target = dispatchHub.get("MathLib");
+      	address target = dispatchHub.get("RequestMetaLib");
 
       	assembly {
 			calldatacopy(0x0, 0x0, calldatasize)

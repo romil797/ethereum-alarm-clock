@@ -4,8 +4,8 @@ import "contracts/Dispatch/DispatchHub.sol";
 
 contract ClaimLibDispatch {
     function() public {
-      	DispatcherStorage dispatcherStorage = DispatcherStorage(0x1111222233334444555566667777888899990000);
-      	address target = dispatcherStorage.get("ClaimLib");
+      	DispatchHub dispatchHub = DispatchHub(0x1111222233334444555566667777888899990000);
+      	address target = dispatchHub.get("ClaimLib");
 
       	assembly {
 			calldatacopy(0x0, 0x0, calldatasize)

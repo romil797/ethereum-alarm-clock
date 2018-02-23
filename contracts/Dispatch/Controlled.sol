@@ -4,8 +4,8 @@ contract Controlled {
     address public controller;
     address public controller_in_waiting;
 
-    function Controlled(address _controller) public {
-        controller = _controller;
+    function Controlled() public {
+        controller = msg.sender;
     }
 
     modifier onlyController() {

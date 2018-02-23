@@ -4,8 +4,8 @@ import "contracts/Dispatch/DispatchHub.sol";
 
 contract ${CONTRACT_NAME}Dispatch {
     function() public {
-      	DispatcherStorage dispatcherStorage = DispatcherStorage(0x1111222233334444555566667777888899990000);
-      	address target = dispatcherStorage.get("${CONTRACT_NAME}");
+      	DispatchHub dispatchHub = DispatchHub(0x1111222233334444555566667777888899990000);
+      	address target = dispatchHub.get("${CONTRACT_NAME}");
 
       	assembly {
 			calldatacopy(0x0, 0x0, calldatasize)

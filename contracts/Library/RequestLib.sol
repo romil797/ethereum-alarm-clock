@@ -1,6 +1,6 @@
 pragma solidity ^0.4.19;
 
-import "contracts/Dispatcher/ClaimLibInterface.sol";
+import "contracts/Library/ClaimLib.sol";
 import "contracts/Library/ExecutionLib.sol";
 import "contracts/Library/PaymentLib.sol";
 import "contracts/Library/RequestMetaLib.sol";

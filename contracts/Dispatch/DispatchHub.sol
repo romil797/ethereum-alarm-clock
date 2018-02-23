@@ -5,7 +5,9 @@ import 'contracts/Dispatch/Controlled.sol';
 contract DispatchHub is Controlled {
     mapping(string => address) libs;
 
-    function DispatchHub() public {}
+    function DispatchHub() public {
+        controller = msg.sender;
+    }
 
     function set(
         string _name,

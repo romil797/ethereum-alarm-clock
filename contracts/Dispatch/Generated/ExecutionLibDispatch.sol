@@ -4,8 +4,8 @@ import "contracts/Dispatch/DispatchHub.sol";
 
 contract ExecutionLibDispatch {
     function() public {
-      	DispatcherStorage dispatcherStorage = DispatcherStorage(0x1111222233334444555566667777888899990000);
-      	address target = dispatcherStorage.get("ExecutionLib");
+      	DispatchHub dispatchHub = DispatchHub(0x1111222233334444555566667777888899990000);
+      	address target = dispatchHub.get("ExecutionLib");
 
       	assembly {
 			calldatacopy(0x0, 0x0, calldatasize)

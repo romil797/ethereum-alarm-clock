@@ -8,6 +8,7 @@ const names = [
     "MathLib",
     "PaymentLib",
     "RequestLib",
+    "RequestMetaLib",
     "RequestScheduleLib",
     "SchedulerLib",
 ]

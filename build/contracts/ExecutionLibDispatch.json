@@ -1,0 +1,372 @@
+{
+  "contractName": "ExecutionLibDispatch",
+  "abi": [
+    {
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "fallback"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6101458061001e6000396000f3006060604052341561000f57600080fd5b60008073e4b9d46d326e1107d4c26dfd34508233d82dfe6e91508173ffffffffffffffffffffffffffffffffffffffff1663693ec85e6000604051602001526040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180806020018281038252600c8152602001807f457865637574696f6e4c69620000000000000000000000000000000000000000815250602001915050602060405180830381600087803b15156100d157600080fd5b6102c65a03f115156100e257600080fd5b5050506040518051905090503660008037600080366000846127105a03f43d806000803e816000811461011457816000f35b816000fd00a165627a7a72305820451f9b9e24bb68ddb38b382a0230e30fe66716f3a6a5dd8d7692682f1dc548250029",
+  "deployedBytecode": "0x6060604052341561000f57600080fd5b60008073111122223333444455556666777788889999000091508173ffffffffffffffffffffffffffffffffffffffff1663693ec85e6000604051602001526040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180806020018281038252600c8152602001807f457865637574696f6e4c69620000000000000000000000000000000000000000815250602001915050602060405180830381600087803b15156100d157600080fd5b6102c65a03f115156100e257600080fd5b5050506040518051905090503660008037600080366000846127105a03f43d806000803e816000811461011457816000f35b816000fd00a165627a7a72305820451f9b9e24bb68ddb38b382a0230e30fe66716f3a6a5dd8d7692682f1dc548250029",
+  "sourceMap": "72:511:4:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "72:511:4:-;;;;;;;;;;;135:23;225:14;173:42;135:81;;242:11;:15;;;:31;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;225:48;;320:12;315:3;310;297:12;412:1;409;395:12;390:3;382:6;374:5;369:3;365;352:12;431:14;470:5;467:1;464;449:14;487:7;503:1;498:34;;;;560:5;557:1;550:6;498:34;521:5;518:1;511:6",
+  "source": "pragma solidity ^0.4.18;\n\nimport \"contracts/Dispatch/DispatchHub.sol\";\n\ncontract ExecutionLibDispatch {\n    function() public {\n      \tDispatchHub dispatchHub = DispatchHub(0x1111222233334444555566667777888899990000);\n      \taddress target = dispatchHub.get(\"ExecutionLib\");\n\n      \tassembly {\n\t\t\tcalldatacopy(0x0, 0x0, calldatasize)\n\t\t\tlet success := delegatecall(sub(gas, 10000), target, 0x0, calldatasize, 0, 0)\n\t\t\tlet retSz := returndatasize\n\t\t\treturndatacopy(0, 0, retSz)\n\t\t\tswitch success\n\t\t\tcase 0 {\n\t\t\t\trevert(0, retSz)\n\t\t\t}\n\t\t\tdefault {\n\t\t\t\treturn(0, retSz)\n\t\t\t}\n\t\t}\n    }\n}\n",
+  "sourcePath": "/home/logan/Work/ethereum-alarm-clock/contracts/Dispatch/Generated/ExecutionLibDispatch.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/logan/Work/ethereum-alarm-clock/contracts/Dispatch/Generated/ExecutionLibDispatch.sol",
+      "exportedSymbols": {
+        "ExecutionLibDispatch": [
+          208
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 188,
+        "name": "PragmaDirective",
+        "src": "0:24:4"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 7149,
+          "absolutePath": "contracts/Dispatch/DispatchHub.sol",
+          "file": "contracts/Dispatch/DispatchHub.sol",
+          "scope": 209,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 189,
+        "name": "ImportDirective",
+        "src": "26:44:4"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            208
+          ],
+          "name": "ExecutionLibDispatch",
+          "scope": 209
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "payable": false,
+              "scope": 208,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 190,
+                "name": "ParameterList",
+                "src": "116:2:4"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 191,
+                "name": "ParameterList",
+                "src": "126:0:4"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        193
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "dispatchHub",
+                          "scope": 207,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "contract DispatchHub",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "contractScope": null,
+                              "name": "DispatchHub",
+                              "referencedDeclaration": 7148,
+                              "type": "contract DispatchHub"
+                            },
+                            "id": 192,
+                            "name": "UserDefinedTypeName",
+                            "src": "135:11:4"
+                          }
+                        ],
+                        "id": 193,
+                        "name": "VariableDeclaration",
+                        "src": "135:23:4"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "contract DispatchHub",
+                          "type_conversion": true
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 7148,
+                              "type": "type(contract DispatchHub)",
+                              "value": "DispatchHub"
+                            },
+                            "id": 194,
+                            "name": "Identifier",
+                            "src": "161:11:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "307831313131323232323333333334343434353535353636363637373737383838383939393930303030",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "address",
+                              "value": "0x1111222233334444555566667777888899990000"
+                            },
+                            "id": 195,
+                            "name": "Literal",
+                            "src": "173:42:4"
+                          }
+                        ],
+                        "id": 196,
+                        "name": "FunctionCall",
+                        "src": "161:55:4"
+                      }
+                    ],
+                    "id": 197,
+                    "name": "VariableDeclarationStatement",
+                    "src": "135:81:4"
+                  },
+                  {
+                    "attributes": {
+                      "assignments": [
+                        199
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "target",
+                          "scope": 207,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "address",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "address",
+                              "type": "address"
+                            },
+                            "id": 198,
+                            "name": "ElementaryTypeName",
+                            "src": "225:7:4"
+                          }
+                        ],
+                        "id": 199,
+                        "name": "VariableDeclaration",
+                        "src": "225:14:4"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "address",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_stringliteral_dc6ebd69f7cbbe46288570174020e101b36c6e4182a499832d441a809e29eab8",
+                                  "typeString": "literal_string \"ExecutionLib\""
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "get",
+                              "referencedDeclaration": 7147,
+                              "type": "function (string memory) view external returns (address)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 193,
+                                  "type": "contract DispatchHub",
+                                  "value": "dispatchHub"
+                                },
+                                "id": 200,
+                                "name": "Identifier",
+                                "src": "242:11:4"
+                              }
+                            ],
+                            "id": 201,
+                            "name": "MemberAccess",
+                            "src": "242:15:4"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "457865637574696f6e4c6962",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "string",
+                              "type": "literal_string \"ExecutionLib\"",
+                              "value": "ExecutionLib"
+                            },
+                            "id": 202,
+                            "name": "Literal",
+                            "src": "258:14:4"
+                          }
+                        ],
+                        "id": 203,
+                        "name": "FunctionCall",
+                        "src": "242:31:4"
+                      }
+                    ],
+                    "id": 204,
+                    "name": "VariableDeclarationStatement",
+                    "src": "225:48:4"
+                  },
+                  {
+                    "attributes": {
+                      "externalReferences": [
+                        {
+                          "target": {
+                            "declaration": 199,
+                            "isOffset": false,
+                            "isSlot": false,
+                            "src": "382:6:4",
+                            "valueSize": 1
+                          }
+                        }
+                      ],
+                      "operations": "{\n    calldatacopy(0x0, 0x0, calldatasize)\n    let success := delegatecall(sub(gas, 10000), target, 0x0, calldatasize, 0, 0)\n    let retSz := returndatasize\n    returndatacopy(0, 0, retSz)\n    switch success\n    case 0 {\n        revert(0, retSz)\n    }\n    default {\n        return(0, retSz)\n    }\n}"
+                    },
+                    "children": [],
+                    "id": 205,
+                    "name": "InlineAssembly",
+                    "src": "283:298:4"
+                  }
+                ],
+                "id": 206,
+                "name": "Block",
+                "src": "126:455:4"
+              }
+            ],
+            "id": 207,
+            "name": "FunctionDefinition",
+            "src": "108:473:4"
+          }
+        ],
+        "id": 208,
+        "name": "ContractDefinition",
+        "src": "72:511:4"
+      }
+    ],
+    "id": 209,
+    "name": "SourceUnit",
+    "src": "0:584:4"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {
+    "1519350737646": {
+      "events": {},
+      "links": {},
+      "address": "0xc6716ac1d29f9f9fb80072f13713573a3c22e878"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-23T01:52:26.678Z"
+}

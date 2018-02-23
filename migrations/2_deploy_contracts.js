@@ -1,56 +1,91 @@
-const fs = require('fs')
+// Schedulers
+const BlockScheduler = artifacts.require('./BlockScheduler.sol')
+const TimestampScheduler = artifacts.require('./TimestampScheduler.sol')
 
-/// Contract artifacts (located in the build/ folder)
-const BaseScheduler               = artifacts.require("./BaseScheduler.sol"),
-      BlockScheduler              = artifacts.require("./BlockScheduler.sol"),
-      ClaimLib                    = artifacts.require("./ClaimLib.sol"),
-      ExecutionLib                = artifacts.require("./ExecutionLib.sol"),
-      GroveLib                    = artifacts.require("./GroveLib.sol"),
-      IterTools                   = artifacts.require("./IterTools.sol"),
-      MathLib                     = artifacts.require("./MathLib.sol"),
-      PaymentLib                  = artifacts.require("./PaymentLib.sol"),
-      RequestFactory              = artifacts.require("./RequestFactory.sol"),
-      RequestFactoryInterface     = artifacts.require("./RequestFactoryInterface.sol"),
-      RequestLib                  = artifacts.require("./RequestLib.sol"),
-      RequestMetaLib              = artifacts.require("./RequestMetaLib.sol"),
-      RequestScheduleLib          = artifacts.require("./RequestScheduleLib.sol"),
-      RequestTracker              = artifacts.require("./RequestTracker.sol"),
-      RequestTrackerInterface     = artifacts.require("./RequestTrackerInterface.sol"),
-      SafeMath                    = artifacts.require("./SafeMath.sol"),
-      SchedulerInterface          = artifacts.require("./SchedulerInterface.sol"),
-      SchedulerLib                = artifacts.require("./SchedulerLib.sol"),
-      TimestampScheduler          = artifacts.require("./TimestampScheduler.sol"),
-      TransactionRequestCore      = artifacts.require("./TransactionRequestCore.sol"),
-      TransactionRequestInterface = artifacts.require("./TransactionRequestInterface.sol");
+// RequestFactory
+const RequestFactory = artifacts.require('./RequestFactory.sol')
 
-const TransactionRecorder = artifacts.require("./TransactionRecorder.sol");
+// TransactionRequestCore
+const TransactionRequestCore = artifacts.require('./TransactionRequestCore.sol')
 
-module.exports = function(deployer) {
+// Dispatch Wrappers
+const ClaimLibDispatch = artifacts.require('./ClaimLibDispatch.sol')
+const ExecutionLibDispatch = artifacts.require('./ExecutionLibDispatch.sol')
+const GroveLibDispatch = artifacts.require('./GroveLibDispatch.sol')
+const MathLibDispatch = artifacts.require('./MathLibDispatch.sol')
+const PaymentLibDispatch = artifacts.require('./PaymentLibDispatch.sol')
+const RequestLibDispatch = artifacts.require('./RequestLibDispatch.sol')
+const RequestMetaLibDispatch = artifacts.require('./RequestMetaLibDispatch.sol')
+const RequestScheduleLibDispatch = artifacts.require('./RequestScheduleLibDispatch.sol')
+const SchedulerLibDispatch = artifacts.require('./SchedulerLibDispatch.sol')
 
-    console.log(`${"-".repeat(30)}
-NOW DEPLOYING THE ETHEREUM ALARM CLOCK CONTRACTS...\n`)
+// DispatchHub
+const DispatchHub = artifacts.require('./DispatchHub.sol')
+const Controlled = artifacts.require('./Controlled.sol')
 
-    deployer.deploy([MathLib,
-        GroveLib,
-        IterTools,
-        ExecutionLib,
-        RequestMetaLib,
-        SafeMath])
+// RequestTracker
+const RequestTracker = artifacts.require('./RequestTracker.sol')
+
+// Libraries
+const ClaimLib = artifacts.require('./ClaimLib.sol')
+const ExecutionLib = artifacts.require('./ExecutionLib.sol')
+const GroveLib = artifacts.require('./GroveLib.sol')
+const MathLib = artifacts.require('./MathLib.sol')
+const PaymentLib = artifacts.require('./PaymentLib.sol')
+const RequestLib = artifacts.require('./RequestLib.sol')
+const RequestMetaLib = artifacts.require('./RequestMetaLib.sol')
+const RequestScheduleLib = artifacts.require('./RequestScheduleLib.sol')
+const SchedulerLib = artifacts.require('./SchedulerLib.sol')
+
+// Misc.
+const IterTools = artifacts.require('./IterTools.sol')
+const SafeMath = artifacts.require('./SafeMath.sol')
+const TransactionRecorder = artifacts.require('./TransactionRecorder.sol')
+
+// Deployment Opts
+const DEPLOY_OPTS = {
+    gas: 2500000,
+    gasPrice: web3.toWei('1', 'gwei'),
+}
+
+// Deploy script
+module.exports = (deployer) => {
+    // First deploy all the libraries we will dispatch to
+    deployer.deploy([
+        [TransactionRecorder, DEPLOY_OPTS],
+        [IterTools, DEPLOY_OPTS],
+        [MathLib, DEPLOY_OPTS],        deployer.link(SchedulerLib, BlockScheduler)
+        deployer.link(RequestScheduleLib, BlockScheduler)
+        deployer.link(PaymentLib, BlockScheduler)
+        deployer.link(RequestLib, BlockScheduler)
+        deployer.link(MathLib, BlockScheduler)
+
+        return deployer.deploy(BlockScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8')        deployer.link(SchedulerLib, BlockScheduler)
+        deployer.link(RequestScheduleLib, BlockScheduler)
+        deployer.link(PaymentLib, BlockScheduler)
+        deployer.link(RequestLib, BlockScheduler)
+        deployer.link(MathLib, BlockScheduler)
+
+        return deployer.deploy(BlockScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8')
+        [GroveLib, DEPLOY_OPTS],
+        [IterTools, DEPLOY_OPTS],
+        [ExecutionLib, DEPLOY_OPTS],
+        [RequestMetaLib, DEPLOY_OPTS],
+        [SafeMath, DEPLOY_OPTS],
+    ])
     .then(() => {
         deployer.link(SafeMath, ClaimLib)
-
-        return deployer.deploy(ClaimLib)
+        return deployer.deploy(ClaimLib, DEPLOY_OPTS)
     })
     .then(() => {
         deployer.link(ExecutionLib, PaymentLib)
         deployer.link(MathLib, PaymentLib)
         deployer.link(SafeMath, PaymentLib)
-
-        return deployer.deploy(PaymentLib)
+        return deployer.deploy(PaymentLib, DEPLOY_OPTS)
     })
     .then(() => {
         deployer.link(SafeMath, RequestScheduleLib)
-        return deployer.deploy(RequestScheduleLib)
+        return deployer.deploy(RequestScheduleLib, DEPLOY_OPTS)
     })
     .then(() => {
         deployer.link(ClaimLib, RequestLib)
@@ -60,105 +95,133 @@ NOW DEPLOYING THE ETHEREUM ALARM CLOCK CONTRACTS...\n`)
         deployer.link(RequestMetaLib, RequestLib)
         deployer.link(RequestScheduleLib, RequestLib)
         deployer.link(SafeMath, RequestLib)
-
-        return deployer.deploy(RequestLib)
+        return deployer.deploy(RequestLib, DEPLOY_OPTS)
     })
     .then(() => {
         deployer.link(MathLib, SchedulerLib)
         deployer.link(PaymentLib, SchedulerLib)
         deployer.link(RequestLib, SchedulerLib)
         deployer.link(SafeMath, SchedulerLib)
-
-        return deployer.deploy(SchedulerLib)
+        return deployer.deploy(SchedulerLib, DEPLOY_OPTS)
     })
     .then(() => {
-        deployer.link(GroveLib, RequestTracker)
-        deployer.link(MathLib, RequestTracker)
-
-        return deployer.deploy(RequestTracker)
+        // Now we can deploy the DispatchHub
+        return deployer.deploy(DispatchHub, DEPLOY_OPTS)
     })
     .then(() => {
-        deployer.link(ClaimLib, TransactionRequestCore)
-        deployer.link(ExecutionLib, TransactionRequestCore)
-        deployer.link(MathLib, TransactionRequestCore)
-        deployer.link(PaymentLib, TransactionRequestCore)
-        deployer.link(RequestMetaLib, TransactionRequestCore)
-        deployer.link(RequestLib, TransactionRequestCore)
-        deployer.link(RequestScheduleLib, TransactionRequestCore)
-        deployer.link(SafeMath, TransactionRequestCore)
-
-        return deployer.deploy(TransactionRequestCore)
+        // And we can set the initial libraries
+        const dispatchHub = DispatchHub.at(DispatchHub.address)
+        return Promise.all([
+            dispatchHub.set("ClaimLib", ClaimLib.address),
+            dispatchHub.set("ExecutionLib", ExecutionLib.address),
+            dispatchHub.set("GroveLib", GroveLib.address),
+            dispatchHub.set("MathLib", MathLib.address),
+            dispatchHub.set("PaymentLib", PaymentLib.address),
+            dispatchHub.set("RequestLib", RequestLib.address),
+            dispatchHub.set("RequestMetaLib", RequestMetaLib.address),
+            dispatchHub.set("RequestScheduleLib", RequestScheduleLib.address),
+            dispatchHub.set("SchedulerLib", SchedulerLib.address),
+        ])
     })
     .then(() => {
-        deployer.link(ClaimLib, RequestFactory)
-        deployer.link(MathLib, RequestFactory)
-        deployer.link(RequestScheduleLib, RequestFactory)
-        deployer.link(IterTools, RequestFactory)
-        deployer.link(PaymentLib, RequestFactory)
-        deployer.link(RequestLib, RequestFactory)
-        deployer.link(RequestTracker, RequestFactory)
-        // deployer.link(TransactionRequest, RequestFactory)
-        deployer.link(SafeMath, RequestFactory)
-        return deployer.deploy(RequestFactory, RequestTracker.address, TransactionRequestCore.address)
+        // We link each of the Dispatch contracts
+        ClaimLibDispatch.unlinked_binary = ClaimLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        ExecutionLibDispatch.unlinked_binary = ExecutionLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        GroveLibDispatch.unlinked_binary = GroveLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        MathLibDispatch.unlinked_binary = MathLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        PaymentLibDispatch.unlinked_binary = PaymentLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        RequestLibDispatch.unlinked_binary = RequestLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        RequestMetaLibDispatch.unlinked_binary = RequestMetaLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        RequestScheduleLibDispatch.unlinked_binary = RequestScheduleLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        SchedulerLibDispatch.unlinked_binary = SchedulerLibDispatch.unlinked_binary.replace(
+            '1111222233334444555566667777888899990000',
+            DispatchHub.address.slice(2)
+        )
+        return Promise.resolve('keep the promise chain going')
     })
     .then(() => {
-        deployer.link(RequestScheduleLib, BaseScheduler)
-        deployer.link(PaymentLib, BaseScheduler)
-        deployer.link(SchedulerLib, BaseScheduler)
-        deployer.link(RequestLib, BaseScheduler)
-        deployer.link(MathLib, BaseScheduler)
-
-        return deployer.deploy(BaseScheduler)
+        // Deploy the Dispatch contracts
+        return deployer.deploy([
+            [ClaimLibDispatch, DEPLOY_OPTS],
+            [ExecutionLibDispatch, DEPLOY_OPTS],
+            [GroveLibDispatch, DEPLOY_OPTS],
+            [MathLibDispatch, DEPLOY_OPTS],
+            [PaymentLibDispatch, DEPLOY_OPTS],
+            [RequestLibDispatch, DEPLOY_OPTS],
+            [RequestMetaLibDispatch, DEPLOY_OPTS],
+            [RequestScheduleLibDispatch, DEPLOY_OPTS],
+            [SchedulerLibDispatch, DEPLOY_OPTS],
+        ])
     })
     .then(() => {
-        deployer.link(SchedulerLib, BlockScheduler)
-        deployer.link(RequestScheduleLib, BlockScheduler)
-        deployer.link(PaymentLib, BlockScheduler)
-        deployer.link(RequestLib, BlockScheduler)
-        deployer.link(MathLib, BlockScheduler)
-
-        return deployer.deploy(BlockScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8')
+        // Now deploy the top level contracts using Dispatchers
+        RequestTracker.link("GroveLib", GroveLibDispatch.address)
+        RequestTracker.link("MathLib", MathLibDispatch.address)
+        return deployer.deploy(RequestTracker, DEPLOY_OPTS)
     })
     .then(() => {
-        deployer.link(SchedulerLib, TimestampScheduler)
-        deployer.link(RequestScheduleLib, TimestampScheduler)
-        deployer.link(PaymentLib, TimestampScheduler)
-        deployer.link(RequestLib, TimestampScheduler)
-        deployer.link(MathLib, TimestampScheduler)
-
-        return deployer.deploy(TimestampScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8')
+        TransactionRequestCore.link("ClaimLib", ClaimLibDispatch.address)
+        TransactionRequestCore.link("ExecutionLib", ExecutionLibDispatch.address)
+        TransactionRequestCore.link("MathLib", MathLibDispatch.address)
+        TransactionRequestCore.link("PaymentLib", PaymentLibDispatch.address)
+        TransactionRequestCore.link("RequestMetaLib", RequestMetaLibDispatch.address)
+        TransactionRequestCore.link("RequestLib", RequestLibDispatch.address)
+        TransactionRequestCore.link("RequestScheduleLib", RequestScheduleLibDispatch.address)
+        TransactionRequestCore.link("SafeMath", SafeMath.address)
+        return deployer.deploy(TransactionRequestCore, DEPLOY_OPTS)
     })
     .then(() => {
-        return deployer.deploy(TransactionRecorder)
+        RequestFactory.link("ClaimLib", ClaimLibDispatch.address)
+        RequestFactory.link("MathLib", ExecutionLibDispatch.address)
+        RequestFactory.link("RequestScheduleLib", RequestScheduleLibDispatch.address)
+        RequestFactory.link("IterTools", IterTools.address)
+        RequestFactory.link("PaymentLib", PaymentLibDispatch.address)
+        RequestFactory.link("RequestLib", RequestLibDispatch.address)
+        RequestFactory.link("RequestTracker", RequestTracker.address)
+        RequestFactory.link("SafeMath", SafeMath.address)
+        return deployer.deploy(RequestFactory, RequestTracker.address, TransactionRequestCore.address, DEPLOY_OPTS)
     })
     .then(() => {
-        const contracts = {
-            baseScheduler: BaseScheduler.address,
-            blockScheduler: BlockScheduler.address,
-            claimLib: ClaimLib.address,
-            executionLib: ExecutionLib.address,
-            groveLib: GroveLib.address,
-            iterTools: IterTools.address,
-            mathLib: MathLib.address,
-            paymentLib: PaymentLib.address,
-            requestFactory: RequestFactory.address,
-            requestLib: RequestLib.address,
-            requestMetaLib: RequestMetaLib.address,
-            requestScheduleLib: RequestScheduleLib.address,
-            requestTracker: RequestTracker.address,
-            safeMath: SafeMath.address,
-            schedulerLib: SchedulerLib.address,
-            timestampScheduler: TimestampScheduler.address,
-            transactionRequestCore: TransactionRequestCore.address,
-            transactionRecorder: TransactionRecorder.address
-        }
-//         Object.keys(contracts).forEach((key) => {
-//             fs.appendFileSync('kovan.info', `${key}, ${contracts[key]}\n`)
-//         })
-//         fs.appendFileSync('kovan.json', JSON.stringify(contracts))
-//         console.log(`CONTRACTS SUCCESSFULLY DEPLOYED
-// ${"-".repeat(30)}
-// see deployed.info for addresses of all contracts
-//         `)
+        BlockScheduler.link("SchedulerLib", SchedulerLibDispatch.address)
+        BlockScheduler.link("RequestScheduleLib", RequestScheduleLibDispatch.address)
+        BlockScheduler.link("PaymentLib", PaymentLibDispatch.address)
+        BlockScheduler.link("RequestLib", RequestLibDispatch.address)
+        BlockScheduler.link("MathLib", MathLibDispatch.address)
+        return deployer.deploy(BlockScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8', DEPLOY_OPTS)
+    })
+    .then(() => {
+        TimestampScheduler.link("SchedulerLib", SchedulerLibDispatch.address)
+        TimestampScheduler.link("RequestScheduleLib", RequestScheduleLibDispatch.address)
+        TimestampScheduler.link("PaymentLib", PaymentLibDispatch.address)
+        TimestampScheduler.link("RequestLib", RequestLibDispatch.address)
+        TimestampScheduler.link("MathLib", MathLibDispatch.address)
+        return deployer.deploy(TimestampScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8', DEPLOY_OPTS)
+    })
+    .then(() => {
+        console.log('fin')
     })
 }
