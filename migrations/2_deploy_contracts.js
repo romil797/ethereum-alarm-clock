@@ -54,19 +54,7 @@ module.exports = (deployer) => {
     deployer.deploy([
         [TransactionRecorder, DEPLOY_OPTS],
         [IterTools, DEPLOY_OPTS],
-        [MathLib, DEPLOY_OPTS],        deployer.link(SchedulerLib, BlockScheduler)
-        deployer.link(RequestScheduleLib, BlockScheduler)
-        deployer.link(PaymentLib, BlockScheduler)
-        deployer.link(RequestLib, BlockScheduler)
-        deployer.link(MathLib, BlockScheduler)
-
-        return deployer.deploy(BlockScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8')        deployer.link(SchedulerLib, BlockScheduler)
-        deployer.link(RequestScheduleLib, BlockScheduler)
-        deployer.link(PaymentLib, BlockScheduler)
-        deployer.link(RequestLib, BlockScheduler)
-        deployer.link(MathLib, BlockScheduler)
-
-        return deployer.deploy(BlockScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8')
+        [MathLib, DEPLOY_OPTS],
         [GroveLib, DEPLOY_OPTS],
         [IterTools, DEPLOY_OPTS],
         [ExecutionLib, DEPLOY_OPTS],
@@ -125,39 +113,39 @@ module.exports = (deployer) => {
     })
     .then(() => {
         // We link each of the Dispatch contracts
-        ClaimLibDispatch.unlinked_binary = ClaimLibDispatch.unlinked_binary.replace(
+        ClaimLibDispatch.bytecode = ClaimLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
-        ExecutionLibDispatch.unlinked_binary = ExecutionLibDispatch.unlinked_binary.replace(
+        ExecutionLibDispatch.bytecode = ExecutionLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
-        GroveLibDispatch.unlinked_binary = GroveLibDispatch.unlinked_binary.replace(
+        GroveLibDispatch.bytecode = GroveLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
-        MathLibDispatch.unlinked_binary = MathLibDispatch.unlinked_binary.replace(
+        MathLibDispatch.bytecode = MathLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
-        PaymentLibDispatch.unlinked_binary = PaymentLibDispatch.unlinked_binary.replace(
+        PaymentLibDispatch.bytecode = PaymentLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
-        RequestLibDispatch.unlinked_binary = RequestLibDispatch.unlinked_binary.replace(
+        RequestLibDispatch.bytecode = RequestLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
-        RequestMetaLibDispatch.unlinked_binary = RequestMetaLibDispatch.unlinked_binary.replace(
+        RequestMetaLibDispatch.bytecode = RequestMetaLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
-        RequestScheduleLibDispatch.unlinked_binary = RequestScheduleLibDispatch.unlinked_binary.replace(
+        RequestScheduleLibDispatch.bytecode = RequestScheduleLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
-        SchedulerLibDispatch.unlinked_binary = SchedulerLibDispatch.unlinked_binary.replace(
+        SchedulerLibDispatch.bytecode = SchedulerLibDispatch.bytecode.replace(
             '1111222233334444555566667777888899990000',
             DispatchHub.address.slice(2)
         )
@@ -189,36 +177,36 @@ module.exports = (deployer) => {
         TransactionRequestCore.link("MathLib", MathLibDispatch.address)
         TransactionRequestCore.link("PaymentLib", PaymentLibDispatch.address)
         TransactionRequestCore.link("RequestMetaLib", RequestMetaLibDispatch.address)
-        TransactionRequestCore.link("RequestLib", RequestLibDispatch.address)
+        TransactionRequestCore.link("RequestLib", RequestLib.address) // Why doesn't d_ispatch work here? Is it because of struct?
         TransactionRequestCore.link("RequestScheduleLib", RequestScheduleLibDispatch.address)
         TransactionRequestCore.link("SafeMath", SafeMath.address)
         return deployer.deploy(TransactionRequestCore, DEPLOY_OPTS)
     })
     .then(() => {
-        RequestFactory.link("ClaimLib", ClaimLibDispatch.address)
-        RequestFactory.link("MathLib", ExecutionLibDispatch.address)
-        RequestFactory.link("RequestScheduleLib", RequestScheduleLibDispatch.address)
+        RequestFactory.link("ClaimLib", ClaimLib.address)
+        RequestFactory.link("MathLib", ExecutionLib.address)
+        RequestFactory.link("RequestScheduleLib", RequestScheduleLib.address)
         RequestFactory.link("IterTools", IterTools.address)
-        RequestFactory.link("PaymentLib", PaymentLibDispatch.address)
-        RequestFactory.link("RequestLib", RequestLibDispatch.address)
+        RequestFactory.link("PaymentLib", PaymentLib.address)
+        RequestFactory.link("RequestLib", RequestLib.address)
         RequestFactory.link("RequestTracker", RequestTracker.address)
         RequestFactory.link("SafeMath", SafeMath.address)
         return deployer.deploy(RequestFactory, RequestTracker.address, TransactionRequestCore.address, DEPLOY_OPTS)
     })
     .then(() => {
-        BlockScheduler.link("SchedulerLib", SchedulerLibDispatch.address)
-        BlockScheduler.link("RequestScheduleLib", RequestScheduleLibDispatch.address)
-        BlockScheduler.link("PaymentLib", PaymentLibDispatch.address)
-        BlockScheduler.link("RequestLib", RequestLibDispatch.address)
-        BlockScheduler.link("MathLib", MathLibDispatch.address)
+        BlockScheduler.link("SchedulerLib", SchedulerLib.address)
+        BlockScheduler.link("RequestScheduleLib", RequestScheduleLib.address)
+        BlockScheduler.link("PaymentLib", PaymentLib.address)
+        BlockScheduler.link("RequestLib", RequestLib.address)
+        BlockScheduler.link("MathLib", MathLib.address)
         return deployer.deploy(BlockScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8', DEPLOY_OPTS)
     })
     .then(() => {
-        TimestampScheduler.link("SchedulerLib", SchedulerLibDispatch.address)
-        TimestampScheduler.link("RequestScheduleLib", RequestScheduleLibDispatch.address)
-        TimestampScheduler.link("PaymentLib", PaymentLibDispatch.address)
-        TimestampScheduler.link("RequestLib", RequestLibDispatch.address)
-        TimestampScheduler.link("MathLib", MathLibDispatch.address)
+        TimestampScheduler.link("SchedulerLib", SchedulerLib.address)
+        TimestampScheduler.link("RequestScheduleLib", RequestScheduleLib.address)
+        TimestampScheduler.link("PaymentLib", PaymentLib.address)
+        TimestampScheduler.link("RequestLib", RequestLib.address)
+        TimestampScheduler.link("MathLib", MathLib.address)
         return deployer.deploy(TimestampScheduler, RequestFactory.address, '0xecc9c5fff8937578141592e7E62C2D2E364311b8', DEPLOY_OPTS)
     })
     .then(() => {
