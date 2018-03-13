@@ -2,7 +2,6 @@ pragma solidity 0.4.19;
 
 import "contracts/Library/ExecutionLib.sol";
 import "contracts/Library/MathLib.sol";
-import "contracts/zeppelin/SafeMath.sol";
 
 /**
  * Library containing the functionality for the bounty and fee payments.
@@ -12,7 +11,7 @@ import "contracts/zeppelin/SafeMath.sol";
  * a way for developers to monetize their work on the EAC.
  */
 library PaymentLib {
-    using SafeMath for uint;
+    using MathLib for uint;
 
     struct PaymentData {
         uint bounty;                /// The amount in wei to be paid to the executing agent of the TransactionRequest.

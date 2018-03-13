@@ -1,9 +1,9 @@
 pragma solidity 0.4.19;
 
-import 'contracts/zeppelin/SafeMath.sol';
+import 'contracts/Library/MathLib.sol';
 
 library ClaimLib {
-    using SafeMath for uint;
+    using MathLib for uint;
 
     struct ClaimData {
         address claimedBy;          // The address that has claimed the txRequest.

@@ -7,10 +7,9 @@ import "contracts/Library/RequestLib.sol";
 import "contracts/Library/RequestScheduleLib.sol";
 
 import "contracts/Library/MathLib.sol";
-import "contracts/zeppelin/SafeMath.sol";
 
 library SchedulerLib {
-    using SafeMath for uint;
+    using MathLib for uint;
 
     struct FutureTransaction {
         address toAddress;          // Destination of the transaction.

@@ -7,7 +7,6 @@ import "contracts/Library/RequestMetaLib.sol";
 import "contracts/Library/RequestScheduleLib.sol";
 
 import "contracts/Library/MathLib.sol";
-import "contracts/zeppelin/SafeMath.sol";
 
 library RequestLib {
     using ClaimLib for ClaimLib.ClaimData;
@@ -15,7 +14,7 @@ library RequestLib {
     using PaymentLib for PaymentLib.PaymentData;
     using RequestMetaLib for RequestMetaLib.RequestMeta;
     using RequestScheduleLib for RequestScheduleLib.ExecutionWindow;
-    using SafeMath for uint;
+    using MathLib for uint;
 
     /*
      *  This struct exists to circumvent an issue with returning multiple

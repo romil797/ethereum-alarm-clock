@@ -1,43 +1,35 @@
 pragma solidity 0.4.19;
 
+/**
+ * @title MathLib
+ * Standard SafeMath functions plus some extra goodies.
+ */
 library MathLib {
     uint constant INT_MAX = 57896044618658097711785492504343953926634992332820282019728792003956564819967;  // 2**255 - 1
-    /*
-     * Subtracts b from a in a manner such that zero is returned when an
-     * underflow condition is met.
-     */
-    // function flooredSub(uint a, uint b) returns (uint) {
-    //     if (b >= a) {
-    //         return 0;
-    //     } else {
-    //         return a - b;
-    //     }
-    // }
 
-    // /*
-    //  * Adds b to a in a manner that throws an exception when overflow
-    //  * conditions are met.
-    //  */
-    // function safeAdd(uint a, uint b) returns (uint) {
-    //     if (a + b >= a) {
-    //         return a + b;
-    //     } else {
-    //         throw;
-    //     }
-    // }
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a * b;
+        require(a == 0 || c / a == b);
+        return c;
+    }
 
-    // /*
-    //  * Multiplies a by b in a manner that throws an exception when overflow
-    //  * conditions are met.
-    //  */
-    // function safeMultiply(uint a, uint b) returns (uint) {
-    //     var result = a * b;
-    //     if (b == 0 || result / b == a) {
-    //         return a * b;
-    //     } else {
-    //         throw;
-    //     }
-    // }
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        // require(b > 0); // Solidity automatically throws when dividing by 0
+        uint256 c = a / b;
+        // require(a == b * c + a % b); // There is no case in which this doesn't hold
+        return c;
+    }
+
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        require(b <= a);
+        return a - b;
+    }
+
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a + b;
+        require(c >= a);
+        return c;
+    }
 
     /*
      * Return the larger of a or b.  Returns a if a == b.
@@ -75,6 +67,5 @@ library MathLib {
     {
         assert(a <= INT_MAX);
         return int(a);
-    }
-    
+    }    
 }

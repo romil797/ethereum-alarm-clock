@@ -1,13 +1,13 @@
 pragma solidity 0.4.19;
 
-import "contracts/zeppelin/SafeMath.sol";
+import 'contracts/Library/MathLib.sol';
 
 /**
  * @title RequestScheduleLib
  * @dev Library containing the logic for request scheduling.
  */
 library RequestScheduleLib {
-    using SafeMath for uint;
+    using MathLib for uint;
 
     /**
      * The manner in which this schedule specifies time.
