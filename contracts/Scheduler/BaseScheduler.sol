@@ -12,7 +12,6 @@ contract BaseScheduler is SchedulerInterface {
     using SchedulerLib for SchedulerLib.FutureTransaction;
 
     address public feeRecipient;       // Recipient of the fee.
-    address public owner;
 
     /*
      * @dev Fallback function to be able to receive ether. This can occur
@@ -43,7 +42,6 @@ contract BaseScheduler is SchedulerInterface {
         uint[8]   _uintArgs
     )
         doReset
-        whenNotPaused
         public payable returns (address newRequest)
     {
         futureTransaction.toAddress         = _toAddress;
@@ -64,50 +62,5 @@ contract BaseScheduler is SchedulerInterface {
 
         NewRequest(newRequest);
         return newRequest;
-    }
-
-    event Pause();
-    event Unpause();
-
-    bool public paused = false;
-
-    /**
-    * @dev Modifier to make a function callable only when the contract is not paused.
-    */
-    modifier whenNotPaused() {
-        require(!paused);
-        _;
-    }
-
-    /**
-    * @dev Modifier to make a function callable only when the contract is paused.
-    */
-    modifier whenPaused() {
-        require(paused);
-        _;
-    }
-
-    /**
-    * @dev called by the owner to pause, triggers stopped state
-    */
-    function pause() onlyOwner whenNotPaused public {
-        paused = true;
-        Pause();
-    }
-
-    /**
-    * @dev called by the owner to unpause, returns to normal state
-    */
-    function unpause() onlyOwner whenPaused public {
-        paused = false;
-        Unpause();
-    }
-
-    /**
-    * @dev Throws if called by any account other than the owner.
-    */
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
     }
 }
