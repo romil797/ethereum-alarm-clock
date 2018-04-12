@@ -59,86 +59,28 @@ Please see the [`eac.js-cli`](https://github.com/ethereum-alarm-clock/eac.js-cli
 
 ## Deployment
 
-The EAC contracts are deployed on both the Kovan and Ropsten testnets at the addresses below.
+The EAC contracts are deployed on both the Kovan testnet at the addresses below.
 
 ```
 Kovan
 
-baseScheduler, 0x36223956a45f658cc7ac4f2c4150bcfad49e6a4b
+blockScheduler, 0x301740b7a856670fc8546909171ee56f242caf96
+timestampScheduler, 0x3fa0f6bde081872162b253bb91887c2c0ccab518
 
-blockScheduler, 0x1afc19a7e642761ba2b55d2a45b32c7ef08269d1
+baseScheduler, 0x5cd32de45015e78242586f41829cafac2e324aef
+claimLib, 0x2d354d837cdfdfa00e606dcf7fe6e5edc78de8dd
+executionLib, 0x93f9859305ceee293014f9c33c47c99243853fed
+iterTools, 0xb96f0f9f4f64ceeeef0069c912afcae817680bab
+mathLib, 0x7299245aad6feba0ed6e4f72119c193211d28f60
+paymentLib, 0x5725c0b1601ef3704a20ed3792486c5afd0a8d33
+requestFactory, 0x8efd30c71194087158e0e59c3a18c6da3361ab54
+requestLib, 0xbcb433108e7673e8b3debbec9fc7d71c654648dc
+requestMetaLib, 0xd423afccfe4cccf72a8de9126ed5ccf2c651a300
+requestScheduleLib, 0x885608b733bb3541b443b50509d13edd6083e5ae
+safeMath, 0xdae0f0169880c99907989743dcbb5abc87dcb755
+transactionRequestCore, 0xae3c5e6271d703ae11606ceb611ab3e03e196ee3
+transactionRecorder, 0xcf2ce51dcf022c1e63ae28be1af7634f53e3af57
 
-claimLib, 0xbfee9c0d041a7ce6357959b5de7a336dc72e6125
-
-executionLib, 0xb23658842939e581b77245e0032ebac83dba9e57
-
-groveLib, 0x4afe44930813599f3a111f335c844dc4a4e9a9c3
-
-iterTools, 0x5e41e026615941b2bfdb696d1d1f910fa1d6f02d
-
-mathLib, 0x147d8962f12dfbaada00c78db9c5f07df536500b
-
-paymentLib, 0x64906a8b50da07ca19c0ec145b933fa0500c7378
-
-requestFactory, 0x496e2b6089bde77293a994469b08e9f266d87adb
-
-requestLib, 0xea74036bab068b83e34233d15b63c50e7edb0f7a
-
-requestMetaLib, 0x013fbac1dfe24ad664419a8a1eb808bfd7e525d6
-
-requestScheduleLib, 0xb6289ea1995af2d58f56410567477c61f2f301c3
-
-requestTracker, 0xc3e310aa664ecc155bec79750400586e87738a75
-
-safeMath, 0xee2eb5b9658403034f2cac4652c1d10d4fd3eb2d
-
-schedulerLib, 0x27a5c2cf457b8457e82887fd793b6dc5d9c45abd
-
-timestampScheduler, 0xc6370807f0164bdf10a66c08d0dab1028dbe80a3
-
-transactionRequestCore, 0x4b500c814add8768cd85de4ac43a15995f5b3663
-
-transactionRecorder, 0x80d8b7ddbd266b8f9113d9e4b017827c3029fcb9
-```
-
-```
-Ropsten
-
-baseScheduler, 0x94291c81a79215cb24457645f48b6e46530d10f7
-
-blockScheduler, 0x4b2cbd698aac423b85dada9c7892b7d8678a1654
-
-claimLib, 0xfc5f42ce6ef6396e538ca8ca22a384fb2d212aee
-
-executionLib, 0xb743e1b53d0bac077210c112b2f164b86cd750cf
-
-groveLib, 0xa427b12fdcbc457342982de74de997282bb798b4
-
-iterTools, 0x82d3ec44de773b36abea3e6fcd5f0be8097bc464
-
-mathLib, 0x6745cad06c2716d4fbf75203753410b1b0deeebf
-
-paymentLib, 0x86bf89d7c9c8f4607127fb8e9398b0c33cdc83e1
-
-requestFactory, 0xc9498985739bd7451f3fd3f5774708aa7bda0f5b
-
-requestLib, 0x85ccad322b326bca0a61c80ffef60dfcc13b5bb3
-
-requestMetaLib, 0x9708fc0aeceaaea0cd1c28e1d5fe4f69eec5213e
-
-requestScheduleLib, 0x9e286151b85d8e5f684001b3499707d04425e3c9
-
-requestTracker, 0xa6e27f575d1460c93cf38879820d711b7367cc6d
-
-safeMath, 0x17c935a24c43cf8e48cd2b1fad4a2e3b342208ec
-
-schedulerLib, 0x15b73e1784fcd8b54a381d99f78e414b4e191268
-
-timestampScheduler, 0x9e93c8a1a2abc7f55a51bc088286e70644a22226
-
-transactionRequestCore, 0xdc4fa890d1f0320fd51812a246e0d8b5fd9ad319
-
-transactionRecorder, 0x28ed44268658496715b4229aab6d3edc1e819701
 ```
 
 ## Thanks and support
