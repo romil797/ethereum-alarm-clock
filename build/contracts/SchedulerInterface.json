@@ -1,0 +1,451 @@
+{
+  "contractName": "SchedulerInterface",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_toAddress",
+          "type": "address"
+        },
+        {
+          "name": "_callData",
+          "type": "bytes"
+        },
+        {
+          "name": "_uintArgs",
+          "type": "uint256[8]"
+        }
+      ],
+      "name": "schedule",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.21;\n\n/**\n * @title SchedulerInterface\n * @dev The base contract that the higher contracts: BaseScheduler, BlockScheduler and TimestampScheduler all inherit from.\n */\ncontract SchedulerInterface {\n    function schedule(address _toAddress, bytes _callData, uint[8] _uintArgs)\n        public payable returns (address);\n}\n",
+  "sourcePath": "contracts/Interface/SchedulerInterface.sol",
+  "ast": {
+    "absolutePath": "contracts/Interface/SchedulerInterface.sol",
+    "exportedSymbols": {
+      "SchedulerInterface": [
+        4601
+      ]
+    },
+    "id": 4602,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4587,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".21"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:25"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title SchedulerInterface\n@dev The base contract that the higher contracts: BaseScheduler, BlockScheduler and TimestampScheduler all inherit from.",
+        "fullyImplemented": false,
+        "id": 4601,
+        "linearizedBaseContracts": [
+          4601
+        ],
+        "name": "SchedulerInterface",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 4600,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "schedule",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4596,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4589,
+                  "name": "_toAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4600,
+                  "src": "239:18:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 4588,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "239:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4591,
+                  "name": "_callData",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4600,
+                  "src": "259:15:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes memory"
+                  },
+                  "typeName": {
+                    "id": 4590,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "259:5:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4595,
+                  "name": "_uintArgs",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4600,
+                  "src": "276:17:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$8_memory_ptr",
+                    "typeString": "uint256[8] memory"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 4592,
+                      "name": "uint",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "276:4:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 4594,
+                    "length": {
+                      "argumentTypes": null,
+                      "hexValue": "38",
+                      "id": 4593,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "281:1:25",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": null,
+                        "typeString": null
+                      },
+                      "value": "8"
+                    },
+                    "nodeType": "ArrayTypeName",
+                    "src": "276:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$8_storage_ptr",
+                      "typeString": "uint256[8] storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "238:56:25"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 4599,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4598,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4600,
+                  "src": "327:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 4597,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "327:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "326:9:25"
+            },
+            "scope": 4601,
+            "src": "221:115:25",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 4602,
+        "src": "187:151:25"
+      }
+    ],
+    "src": "0:339:25"
+  },
+  "legacyAST": {
+    "absolutePath": "contracts/Interface/SchedulerInterface.sol",
+    "exportedSymbols": {
+      "SchedulerInterface": [
+        4601
+      ]
+    },
+    "id": 4602,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4587,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".21"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:25"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title SchedulerInterface\n@dev The base contract that the higher contracts: BaseScheduler, BlockScheduler and TimestampScheduler all inherit from.",
+        "fullyImplemented": false,
+        "id": 4601,
+        "linearizedBaseContracts": [
+          4601
+        ],
+        "name": "SchedulerInterface",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 4600,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "schedule",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4596,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4589,
+                  "name": "_toAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4600,
+                  "src": "239:18:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 4588,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "239:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4591,
+                  "name": "_callData",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4600,
+                  "src": "259:15:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes memory"
+                  },
+                  "typeName": {
+                    "id": 4590,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "259:5:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4595,
+                  "name": "_uintArgs",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4600,
+                  "src": "276:17:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$8_memory_ptr",
+                    "typeString": "uint256[8] memory"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 4592,
+                      "name": "uint",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "276:4:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 4594,
+                    "length": {
+                      "argumentTypes": null,
+                      "hexValue": "38",
+                      "id": 4593,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "281:1:25",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": null,
+                        "typeString": null
+                      },
+                      "value": "8"
+                    },
+                    "nodeType": "ArrayTypeName",
+                    "src": "276:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$8_storage_ptr",
+                      "typeString": "uint256[8] storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "238:56:25"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 4599,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4598,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4600,
+                  "src": "327:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 4597,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "327:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "326:9:25"
+            },
+            "scope": 4601,
+            "src": "221:115:25",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 4602,
+        "src": "187:151:25"
+      }
+    ],
+    "src": "0:339:25"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.21+commit.dfe3193c.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-04-12T07:42:49.306Z"
+}
