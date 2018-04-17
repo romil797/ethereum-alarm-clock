@@ -11,7 +11,8 @@
         "test": "truffle test",
         "coverage": "./node_modules/.bin/solidity-coverage",
         "lint": "./node_modules/eslint/bin/eslint.js .",
-        "solium": "./node_modules/solium/bin/solium.js -d contracts --fix"
+        "solium": "./node_modules/solium/bin/solium.js -d contracts --fix",
+        "clean": "truffle networks --clean"
     },
     "repository": {
         "type": "git",
@@ -25,6 +26,7 @@
     "homepage": "https://github.com/chronologic/ethereum-alarm-clock#readme",
     "dependencies": {
         "@optionality.io/clone-factory": "^0.1.2",
+        "cipm": "^1.0.2",
         "ethereumjs-util": "^5.1.2",
         "nconf": "^0.8.4",
         "solc": "^0.4.21",
@@ -43,6 +45,7 @@
         "solidity-coverage": "^0.4.15"
     },
     "pre-commit": [
+        "clean",
         "lint",
         "solium"
     ]
